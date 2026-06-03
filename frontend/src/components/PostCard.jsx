@@ -1,6 +1,47 @@
 import React, { useState } from 'react';
 import { Heart, MessageSquare, Share2, CornerDownRight, User } from 'lucide-react';
 
+function formatTimestamp(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return dateString;
+
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMins / 60);
+
+  if (diffMs < 0) {
+    return 'Just now';
+  }
+  if (diffMins < 1) {
+    return 'Just now';
+  }
+  if (diffMins < 60) {
+    return `${diffMins} ${diffMins === 1 ? 'minute' : 'minutes'} ago`;
+  }
+  if (diffHours < 24) {
+    return `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago`;
+  }
+
+  try {
+    const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
+    const day = date.toLocaleDateString('en-US', { day: '2-digit' });
+    const month = date.toLocaleDateString('en-US', { month: 'short' });
+    const year = date.toLocaleDateString('en-US', { year: 'numeric' });
+    
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    
+    return `${weekday}, ${day} ${month} ${year}, ${hours}:${minutes} ${ampm}`;
+  } catch (err) {
+    return date.toLocaleString();
+  }
+}
+
 export default function PostCard({ post, onLike, onFollowToggle, onAddComment, onHashtagClick, addToast }) {
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState('');
@@ -89,7 +130,7 @@ export default function PostCard({ post, onLike, onFollowToggle, onAddComment, o
               </span>
               <span style={{ fontSize: '10px', color: 'var(--color-outline)' }}>•</span>
               <span className="label-sm" style={{ color: 'var(--color-outline)' }}>
-                {post.time}
+                {formatTimestamp(post.createdAt || post.time)}
               </span>
             </div>
           </div>
@@ -257,7 +298,7 @@ export default function PostCard({ post, onLike, onFollowToggle, onAddComment, o
                       </span>
                       <span style={{ fontSize: '9px', color: 'var(--color-outline)' }}>•</span>
                       <span style={{ fontSize: '9px', color: 'var(--color-outline)' }}>
-                        {comment.time || 'Just now'}
+                        {formatTimestamp(comment.time)}
                       </span>
                     </div>
                     <p className="body-base" style={{ fontSize: '12px', color: 'var(--color-on-surface-variant)', marginTop: '2px' }}>
