@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart, MessageSquare, Share2, CornerDownRight, User } from 'lucide-react';
 
 function formatTimestamp(dateString) {
@@ -47,8 +47,26 @@ export default function PostCard({ post, onLike, onFollowToggle, onAddComment, o
   const [commentText, setCommentText] = useState('');
   const [animateLike, setAnimateLike] = useState(false);
 
+  // Local state for optimistic updates
+  const [localIsLiked, setLocalIsLiked] = useState(post.isLiked);
+  const [localLikesCount, setLocalLikesCount] = useState(post.likes);
+
+  // Sync state if parent props update from server
+  useEffect(() => {
+    setLocalIsLiked(post.isLiked);
+    setLocalLikesCount(post.likes);
+  }, [post.isLiked, post.likes]);
+
   const handleLikeClick = () => {
     setAnimateLike(true);
+    // Instantly toggle local state for zero latency
+    if (localIsLiked) {
+      setLocalIsLiked(false);
+      setLocalLikesCount((prev) => Math.max(0, prev - 1));
+    } else {
+      setLocalIsLiked(true);
+      setLocalLikesCount((prev) => prev + 1);
+    }
     onLike(post.id);
     setTimeout(() => setAnimateLike(false), 300);
   };
@@ -177,20 +195,20 @@ export default function PostCard({ post, onLike, onFollowToggle, onAddComment, o
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
-            color: post.isLiked ? 'var(--color-error)' : 'var(--color-on-surface-variant)',
+            color: localIsLiked ? 'var(--color-error)' : 'var(--color-on-surface-variant)',
           }}
           className={animateLike ? 'heart-pulse' : ''}
           id={`like-action-${post.id}`}
-          aria-label={`${post.likes} Likes`}
+          aria-label={`${localLikesCount} Likes`}
         >
           <Heart
             size={20}
             strokeWidth={2}
-            fill={post.isLiked ? 'var(--color-error)' : 'none'}
+            fill={localIsLiked ? 'var(--color-error)' : 'none'}
             style={{ transition: 'fill 0.2s ease' }}
           />
           <span className="label-md" style={{ color: 'var(--color-on-surface-variant)' }}>
-            {post.likes}
+            {localLikesCount}
           </span>
         </button>
 
