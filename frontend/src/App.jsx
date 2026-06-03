@@ -64,13 +64,39 @@ export default function App() {
     addToast('Logged out successfully!');
   };
 
-  // Likes toggler endpoint wrapper
+  // Likes toggler endpoint wrapper with Optimistic Updates
   const handleLike = async (postId) => {
-    if (!token) {
+    if (!token || !currentUser) {
       addToast('Please login to like posts');
       return;
     }
+
+    let originalPosts = posts;
+
     try {
+      // 1. Perform optimistic update immediately
+      setPosts((prevPosts) => {
+        originalPosts = prevPosts;
+        return prevPosts.map((post) => {
+          if (post._id === postId || post.id === postId) {
+            const userHandle = currentUser.handle;
+            const likesArray = post.likes ? [...post.likes] : [];
+            const hasLiked = likesArray.includes(userHandle);
+            
+            const updatedLikes = hasLiked
+              ? likesArray.filter((h) => h !== userHandle)
+              : [...likesArray, userHandle];
+
+            return {
+              ...post,
+              likes: updatedLikes
+            };
+          }
+          return post;
+        });
+      });
+
+      // 2. Fire the network request in background
       const response = await fetch(`${API_URL}/posts/${postId}/like`, {
         method: 'POST',
         headers: {
@@ -80,11 +106,15 @@ export default function App() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'Failed to update like status');
 
-      // Update local posts array
+      // 3. Confirm with server response (silent sync)
       setPosts((prevPosts) =>
         prevPosts.map((post) => (post._id === postId || post.id === postId ? { ...post, likes: data.likes } : post))
       );
     } catch (err) {
+      // 4. Roll back to original state on failure
+      if (originalPosts) {
+        setPosts(originalPosts);
+      }
       addToast(err.message);
     }
   };
