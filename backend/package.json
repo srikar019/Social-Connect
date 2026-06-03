@@ -1,7 +1,7 @@
 {
-  "name": "social-connect-backend",
+  "name": "posthub-backend",
   "version": "1.0.0",
-  "description": "Full-stack Node/Express server for Social Connect",
+  "description": "Full-stack Node/Express server for PostHub",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

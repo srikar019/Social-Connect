@@ -22,7 +22,7 @@ app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ limit: '20mb', extended: true }));
 
 // DB Connection
-const dbUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/socialconnect';
+const dbUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/posthub';
 console.log('Connecting to database:', dbUri);
 
 mongoose.connect(dbUri)
@@ -50,7 +50,7 @@ app.use('/api/posts', require('./routes/posts'));
 app.get('/', (req, res) => {
   res.json({
     status: 'online',
-    message: 'Welcome to the Social Connect REST API Server.',
+    message: 'Welcome to the PostHub REST API Server.',
     time: new Date()
   });
 });

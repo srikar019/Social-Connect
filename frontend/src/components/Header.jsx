@@ -61,7 +61,7 @@ export default function Header({ currentUser, onLogout }) {
             userSelect: 'none'
           }}
         >
-          Social Connect
+          PostHub
         </span>
       </div>
 

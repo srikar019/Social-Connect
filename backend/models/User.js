@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
   },
   bio: {
     type: String,
-    default: 'New creator on Social Connect!',
+    default: 'New creator on PostHub!',
   },
   location: {
     type: String,

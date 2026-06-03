@@ -1,6 +1,6 @@
-# Social Connect
+# PostHub
 
-Social Connect is a modern, responsive, and full-stack social networking application built with **React (Vite)**, **Node.js (Express)**, and **MongoDB**. The platform features a premium, eye-catching design styled with Vanilla CSS using a custom **Royal Violet** color system, custom UI components, and rich animations.
+PostHub is a modern, responsive, and full-stack social networking application built with **React (Vite)**, **Node.js (Express)**, and **MongoDB**. The platform features a premium, eye-catching design styled with Vanilla CSS using a custom **Royal Violet** color system, custom UI components, and rich animations.
 
 ---
 
@@ -50,7 +50,7 @@ Make sure you have [Node.js](https://nodejs.org/) and [MongoDB](https://www.mong
 3. Configure environment variables. Create a `.env` file in the `backend` directory (using `.env.example` as a template):
    ```env
    PORT=5000
-   MONGODB_URI=mongodb://127.0.0.1:27017/socialconnect
+   MONGODB_URI=mongodb://127.0.0.1:27017/posthub
    JWT_SECRET=your_jwt_secret_key_here
    ```
 4. Start the backend development server:

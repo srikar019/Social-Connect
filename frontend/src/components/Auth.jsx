@@ -98,7 +98,7 @@ export default function Auth({ onAuthSuccess, addToast }) {
             }}
           >
             <span style={{ fontSize: '13px', fontWeight: '500', color: '#191b23', letterSpacing: '-0.01em' }}>
-              Social Connect
+              PostHub
             </span>
           </div>
         </div>
