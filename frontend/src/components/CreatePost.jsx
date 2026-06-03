@@ -161,16 +161,33 @@ export default function CreatePost({ onAddPost, currentUser, addToast }) {
             id="attach-image-button"
             onClick={() => fileInputRef.current.click()}
             style={{
-              padding: '8px',
-              borderRadius: 'var(--rounded-full)',
-              color: 'var(--color-on-surface-variant)',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              gap: '6px',
+              padding: '6px 14px',
+              borderRadius: 'var(--rounded-full)',
+              border: '1px solid var(--color-outline-variant)',
+              backgroundColor: 'var(--color-surface-container-lowest)',
+              color: 'var(--color-on-surface-variant)',
+              fontSize: '12px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--color-surface-container-low)';
+              e.currentTarget.style.color = 'var(--color-primary)';
+              e.currentTarget.style.borderColor = 'var(--color-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--color-surface-container-lowest)';
+              e.currentTarget.style.color = 'var(--color-on-surface-variant)';
+              e.currentTarget.style.borderColor = 'var(--color-outline-variant)';
             }}
             aria-label="Attach real image file"
           >
-            <ImageIcon size={20} strokeWidth={2} />
+            <ImageIcon size={16} strokeWidth={2} />
+            <span>Add Image</span>
           </button>
 
           {/* Emoji Trigger */}
@@ -179,16 +196,33 @@ export default function CreatePost({ onAddPost, currentUser, addToast }) {
               id="insert-emoji-button"
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
               style={{
-                padding: '8px',
-                borderRadius: 'var(--rounded-full)',
-                color: 'var(--color-on-surface-variant)',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
+                gap: '6px',
+                padding: '6px 14px',
+                borderRadius: 'var(--rounded-full)',
+                border: '1px solid var(--color-outline-variant)',
+                backgroundColor: 'var(--color-surface-container-lowest)',
+                color: 'var(--color-on-surface-variant)',
+                fontSize: '12px',
+                fontWeight: '500',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--color-surface-container-low)';
+                e.currentTarget.style.color = 'var(--color-primary)';
+                e.currentTarget.style.borderColor = 'var(--color-primary)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--color-surface-container-lowest)';
+                e.currentTarget.style.color = 'var(--color-on-surface-variant)';
+                e.currentTarget.style.borderColor = 'var(--color-outline-variant)';
               }}
               aria-label="Insert Emoji"
             >
-              <Smile size={20} strokeWidth={2} />
+              <Smile size={16} strokeWidth={2} />
+              <span>Emoji</span>
             </button>
 
             {showEmojiPicker && (
