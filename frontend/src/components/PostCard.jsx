@@ -236,9 +236,9 @@ export default function PostCard({ post, onLike, onFollowToggle, onAddComment, o
           {/* List existing comments */}
           {post.comments.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '180px', overflowY: 'auto' }}>
-              {post.comments.map((comment) => (
+              {post.comments.map((comment, idx) => (
                 <div
-                  key={comment.id}
+                  key={comment._id || comment.id || idx}
                   style={{
                     display: 'flex',
                     alignItems: 'flex-start',
