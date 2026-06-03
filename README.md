@@ -119,5 +119,5 @@ assessment/
 
 ## 🌐 Deployed Links
 
-*   **Frontend**: *[Add Deployed Frontend Link Here]*
-*   **Backend API**: *[Add Deployed Backend Link Here]*
+*   **Frontend**: *https://posthub-frontend.vercel.app/*
+*   **Backend API**: *https://social-connect-backend-gpgw.onrender.com*
