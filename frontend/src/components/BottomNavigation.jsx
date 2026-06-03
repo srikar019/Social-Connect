@@ -68,8 +68,8 @@ export default function BottomNavigation({ onHomeClick, onComposeClick, onSearch
         <path
           d={pathData}
           fill="var(--color-surface-container-lowest)"
-          stroke="#000000"
-          strokeWidth="1.5"
+          stroke="var(--color-outline-variant)"
+          strokeWidth="1"
         />
       </svg>
 
