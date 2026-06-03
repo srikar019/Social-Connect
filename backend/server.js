@@ -5,8 +5,18 @@ require('dotenv').config();
 
 const app = express();
 
-// Middlewares
-app.use(cors());
+const allowedOrigins = [
+  'https://social-connect-frontend.vercel.app',
+  'https://social-connect-frontend-five.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 // Set JSON payload size limit higher to support base64 images uploads
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ limit: '20mb', extended: true }));
