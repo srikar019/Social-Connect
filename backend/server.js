@@ -5,15 +5,17 @@ require('dotenv').config();
 
 const app = express();
 
-const allowedOrigins = [
-  'https://social-connect-frontend.vercel.app',
-  'https://social-connect-frontend-five.vercel.app',
-  'http://localhost:5173',
-  'http://localhost:3000'
-];
-
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    // Allow localhost and any vercel.app subdomain
+    const isLocalhost = origin.startsWith('http://localhost:');
+    const isVercel = origin.endsWith('.vercel.app');
+    if (isLocalhost || isVercel) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'), false);
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
